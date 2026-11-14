@@ -18,14 +18,17 @@ CREATE TABLE IF NOT EXISTS droits (
 
 # Badges de test : remplacez les UID par ceux de VOS vrais badges
 badges = [
-    ("A1B2C3D4", "Sara Benali",   "etudiant",   1),
-    ("11223344", "Prof. Amrani",  "enseignant", 1),
-    ("DEADBEEF", "Ancien badge",  "etudiant",   0),   # révoqué
+    ("A1B2C3D4", "Amina Albane",       "admin",    1),
+    ("11223344", "Tinhinane Bilarbi",  "etudiant", 1),
+    ("55667788", "Sonia Benazzouz",    "etudiant", 1),
+    ("DEADBEEF", "Azil Melissa",       "etudiant", 0),   # révoqué (pour tester le refus)
 ]
 droits = [
     ("A1B2C3D4", "salle1"),
+    ("A1B2C3D4", "salle2"),
     ("11223344", "salle1"),
-    ("11223344", "salle2"),
+    ("55667788", "salle1"),
+    ("55667788", "salle2"),
     ("DEADBEEF", "salle1"),
 ]
 con.executemany("INSERT OR IGNORE INTO badges VALUES (?,?,?,?)", badges)
