@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS droits (
 # Badges de test : remplacez les UID par ceux de VOS vrais badges
 badges = [
     ("A1B2C3D4", "Amina Albane",       "admin",    1),
-    ("11223344", "Tinhinane Bilarbi",  "etudiant", 1),
+    ("11223344", "Tinhinane Belarbi",  "etudiant", 1),
     ("55667788", "Sonia Benazzouz",    "etudiant", 1),
     ("DEADBEEF", "Azil Melissa",       "etudiant", 0),   # révoqué (pour tester le refus)
 ]
