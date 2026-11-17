@@ -2,3 +2,4 @@ venv/
 badges.db
 __pycache__/
 *.tar
+rfid.db
