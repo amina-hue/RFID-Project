@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api import statistiques
+from api import salles, statistiques, utilisateurs
 from database.sqlite_db import init_schema
 from services import mqtt_service
 
@@ -34,6 +34,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(utilisateurs.router)
+app.include_router(salles.router)
 app.include_router(statistiques.router)
 
 
