@@ -1,6 +1,7 @@
 """Écriture et lecture des événements d'accès dans InfluxDB."""
 import hashlib
 import os
+from datetime import datetime, timezone
 
 from influxdb_client import Point
 
@@ -27,6 +28,39 @@ def enregistrer(salle, uid, autorise, raison, nom, role, latence_ms):
         .field("latency_ms", float(latence_ms))
     )
     write_api.write(bucket=INFLUX_BUCKET, record=point)
+
+
+def enregistrer_manuel(salle, uid, nom, role, valide_par, motif=None, refus_heure=None):
+    """Écrit une entrée autorisée à la main. Retourne l'heure de l'événement (ISO)."""
+    maintenant = datetime.now(timezone.utc)
+    point = (
+        Point("access_events")
+        .tag("room", salle)
+        .tag("role", role)
+        .tag("result", "granted")
+        .field("uid_hash", hacher(uid))
+        .field("nom", nom)
+        .field("reason", "autorisation_manuelle")
+        .field("latency_ms", 0.0)
+        .field("valide_par", valide_par)
+        .field("motif", motif or "")
+        .field("refus_heure", refus_heure or "")
+        .time(maintenant)
+    )
+    write_api.write(bucket=INFLUX_BUCKET, record=point)
+    return maintenant.isoformat()
+
+
+def deja_autorise(salle: str, refus_heure: str) -> bool:
+    """Ce refus a-t-il déjà une autorisation manuelle ?"""
+    requete = f'''
+from(bucket: "{INFLUX_BUCKET}")
+  |> range(start: -90d)
+  |> filter(fn: (r) => r._measurement == "access_events" and r.room == "{salle}")
+  |> filter(fn: (r) => r._field == "refus_heure" and r._value == "{refus_heure}")
+  |> limit(n: 1)
+'''
+    return any(table.records for table in query_api.query(requete))
 
 
 # ---------- Lecture (utilisée par l'API plus tard) ----------
@@ -57,6 +91,9 @@ from(bucket: "{INFLUX_BUCKET}")
                 "nom": r.values.get("nom"),
                 "latence_ms": r.values.get("latency_ms"),
                 "uid_hash": r.values.get("uid_hash"),
+                "valide_par": r.values.get("valide_par"),
+                "motif": r.values.get("motif"),
+                "refus_heure": r.values.get("refus_heure"),
             })
     return lignes
 

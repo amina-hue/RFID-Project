@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api import autorisations, badges, salles, statistiques, utilisateurs
+from api import acces, autorisations, badges, salles, statistiques, utilisateurs
 from database.sqlite_db import init_schema
 from services import mqtt_service
 
@@ -39,6 +39,7 @@ app.include_router(badges.router)
 app.include_router(salles.router)
 app.include_router(autorisations.router)
 app.include_router(statistiques.router)
+app.include_router(acces.router)
 
 
 @app.get("/")
