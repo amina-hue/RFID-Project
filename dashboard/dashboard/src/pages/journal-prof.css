@@ -1,0 +1,119 @@
+/* Page Journal (vue enseignant) : sans sidebar, classes préfixées jp- pour éviter tout conflit.
+   Les couleurs viennent des variables de layout.css (--bg, --card, --border, --text, --muted, --accent...). */
+
+.jp {
+  min-height: 100vh;
+  padding: 28px 40px 56px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+.jp-contenu { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+/* ---------- En-tête ---------- */
+.jp-entete { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.jp-entete h1 { margin: 0; font-size: 22px; font-weight: 700; }
+.jp-entete p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+.jp-entete__droite { display: flex; align-items: center; gap: 12px; }
+
+.jp-lecture {
+  padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  color: #f59e0b; background: rgba(245, 158, 11, .12); border: 1px solid rgba(245, 158, 11, .45);
+}
+.jp-horloge {
+  padding: 8px 18px; border-radius: 10px; font-size: 16px; font-weight: 700;
+  font-variant-numeric: tabular-nums; background: var(--card); border: 1px solid var(--border);
+}
+.jp-salles {
+  height: 34px; padding: 0 12px; border-radius: 9px; font: inherit; font-size: 11px;
+  color: var(--muted); background: var(--card); border: 1px solid var(--border); cursor: pointer;
+}
+.jp-salles:hover { color: var(--text); }
+
+/* ---------- Personnes présentes ---------- */
+.jp-presence {
+  display: flex; align-items: center; gap: 14px; align-self: flex-start;
+  min-width: 280px; padding: 14px 18px; border-radius: 12px;
+  background: var(--card); border: 1px solid var(--border);
+}
+.jp-presence__icone { width: 36px; height: 36px; border-radius: 9px; background: rgba(34, 197, 94, .15); }
+.jp-presence span { font-size: 11px; color: var(--muted); }
+.jp-presence__valeur { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+.jp-presence__valeur b { font-size: 28px; }
+.jp-presence__valeur em { font-style: normal; font-size: 11px; color: var(--muted); }
+
+.jp-separateur { width: 100%; margin: 4px 0; border: 0; border-top: 1px solid var(--border); }
+
+.jp-section h2 { margin: 0; font-size: 18px; font-weight: 700; }
+.jp-section p { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+
+/* ---------- Filtres ---------- */
+.jp-filtres { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; }
+.jp-filtres label, .jp-fenetre label {
+  display: flex; flex-direction: column; gap: 6px; font-size: 11px; color: var(--muted);
+}
+.jp-filtres select, .jp-filtres input, .jp-fenetre select, .jp-fenetre input {
+  height: 38px; padding: 0 12px; border-radius: 9px; font: inherit; font-size: 13px;
+  background: var(--card); color: var(--text); border: 1px solid var(--border);
+}
+.jp select:focus-visible, .jp input:focus-visible, .jp button:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.jp-lien { height: 38px; background: none; border: 0; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer; }
+.jp-lien:hover { color: var(--text); }
+
+/* ---------- Boutons ---------- */
+.jp-btn {
+  height: 30px; padding: 0 14px; border-radius: 8px; font: inherit; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--accent); color: var(--accent); background: none;
+}
+.jp-btn--contour:hover { background: var(--accent-soft); }
+.jp-btn--plein { height: 38px; background: var(--accent); color: #fff; font-size: 13px; }
+.jp-btn--plein:disabled { opacity: .45; cursor: not-allowed; }
+.jp-btn--filtrer { padding: 0 32px; }
+
+/* ---------- Tableau ---------- */
+.jp-tableau { border-radius: 12px; background: var(--card); border: 1px solid var(--border); overflow-x: auto; }
+.jp-tableau table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.jp-tableau th {
+  text-align: left; padding: 14px 20px; font-size: 10px; font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--muted); background: var(--accent-soft); white-space: nowrap;
+}
+.jp-tableau td { padding: 14px 20px; border-top: 1px solid var(--border); vertical-align: middle; }
+.jp-vide { text-align: center; color: var(--muted); padding: 32px !important; }
+.jp-detail { margin-top: 4px; font-size: 10px; color: var(--muted); }
+
+.jp-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+  border-radius: 999px; font-size: 11px;
+}
+.jp-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.jp-badge--ok { background: rgba(34, 197, 94, .15); color: var(--ok); }
+.jp-badge--ko { background: rgba(244, 63, 94, .15); color: var(--danger); }
+.jp-badge--man { background: rgba(245, 158, 11, .15); color: #f59e0b; }
+
+.jp-erreur {
+  padding: 10px 14px; border-radius: 9px; font-size: 13px;
+  background: rgba(244, 63, 94, .12); color: var(--danger);
+}
+
+/* ---------- Fenêtre « Autoriser l'accès » ---------- */
+.jp-voile { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: rgba(0, 0, 0, .55); }
+.jp-fenetre {
+  width: min(420px, 92vw); display: flex; flex-direction: column; gap: 14px; padding: 22px;
+  border-radius: 14px; background: var(--panel); border: 1px solid var(--border); color: var(--text);
+}
+.jp-fenetre h2 { margin: 0; font-size: 16px; }
+.jp-fenetre .jp-detail { margin: 0; font-size: 11px; }
+.jp-fenetre__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+
+@media (max-width: 800px) {
+  .jp { padding: 20px 16px 40px; }
+  .jp-horloge { display: none; }
+}
+
+/* ---------- Bandeau « données de démonstration » ---------- */
+.jp-demo {
+  padding: 8px 14px; border-radius: 9px; font-size: 12px;
+  color: #f59e0b; background: rgba(245, 158, 11, .1); border: 1px dashed rgba(245, 158, 11, .45);
+}
